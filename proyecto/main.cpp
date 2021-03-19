@@ -19,6 +19,9 @@ struct Product{
 //contadore de limite
 int nDatos, idNuevo;
 
+int option2;
+int optionM1;
+
 //proto menus
 int menuAdmin();
     int adminAltas();
@@ -111,8 +114,8 @@ int main(){
 }
 
 menu1(){
-    int optionM1=0;
-    do{
+    while(true){
+        optionM1=0;
         system("cls");
         cout<< "*************** MEMU PRINCIPAL ***************\n\n";
         cout<< "*escribe un numero para seleccionar una opcion\n";
@@ -120,6 +123,9 @@ menu1(){
         cout<< " 2   VENTAS\n";
         cout<< " *   SALIR\n";
         cin>>optionM1;
+        cin.clear();
+        cin.sync();
+        if(optionM1==0)break;
         //TODO******-------------------> conversor de string a int. <---------------------------*******
         //TODO******-------------------> seleccion de opciones con string. <---------------------------*******
         switch(optionM1){
@@ -140,14 +146,14 @@ menu1(){
                 system("cls");
             }     
         }
-    }while(optionM1!=0);  
+    }  
     }
 
-menuAdmin(){
+menuAdmin(){   
     while(true){
-    int option2=0;
+    option2=0;
     system("cls");
-        cout<< "*************** MEMU PRINCIPAL ***************\n\n";
+        cout<< "*************** MEMU ADMINISTRACION ***************\n\n";
         cout<< "*escribe un numero para seleccionar una opcion\n";
         cout<< " 1   Altas\n";
         cout<< " 2   Bajas\n";
@@ -160,6 +166,8 @@ menuAdmin(){
         cout<< " *   SALIR\n";
         cout<< " opcion: ";
         cin>>option2;
+        cin.clear();
+        cin.sync();
         if(option2==0)break;
         switch(option2){
             case 1:{
@@ -182,6 +190,7 @@ menuAdmin(){
             }
             case 4:{
                 //modificaciones
+                adminModific();
                 break;
             }
             case 5:{
@@ -259,7 +268,7 @@ adminAltas(){
             if(sel2==2)break;
         }              
     }
-    }
+}
 
 adminBajas(){
     while(true){
@@ -275,14 +284,6 @@ adminBajas(){
 
         //buscamos info del producto
         switch (exist(prodActual.producto,-1)){
-                   
-                    // PEDIR ID DEL PRODUCTO PARA ELIMINAR
-    //     cout<<"\nEscribe el Id de producto para Baja o * para salr: ";cin>>prodActual.id;
-    //     if(prodActual.id==0)break;
-        
-    // //buscamos informacion del producto
-    //     switch (exist("",prodActual.id)){
-
         //no existe producto
             case -1:{
                 system("cls");
@@ -317,32 +318,16 @@ adminBajas(){
 }
 
 void adminConsulta(){
-    int option;
+    int encontrado;
+    string entrada;
     while(true){
         clearStruct();
-        option=0;
-        cout<<"************** CONSULTAS ***************\n";
-        cout<<"\nbuscar por: \n\t1.-id\n\t2.-nombre\n*  salir: ";cin>>option;
-        if(option==0) break;
-        system("cls");
-        cout<<"************** CONSULTAS ***************\n";
-        int encontrado=0;
-        switch(option){
-            case 1:{
-                //busqueda por id
-                int entrada=-1;
-                cout<<"escribe el id del producto buscado: ";cin>>entrada;
-                encontrado = (exist("",entrada)==-2) ? 1 : 0;
-                break;
-            }
-            case 2:{
-                //busqueda por nombre
-                 string entrada;
-                cout<<"escribe el nombre del producto buscado: ";cin>>entrada;
-                encontrado = (exist(entrada,-1)==-2) ? 1 : 0;
-                break;
-            }
-        }
+        encontrado=0;
+        //busqueda por nombre
+        
+        cout<<"escribe el nombre del producto buscado o * para salir: ";cin>>entrada;
+        if(entrada=="*") break;
+        encontrado = (exist(entrada,-1)==-2) ? 1 : 0;
         if(encontrado==1){
             imprimir(-2);
             imprimir(-3);
@@ -356,8 +341,81 @@ void adminConsulta(){
 }
 
 adminModific(){
-        
+    while(true){
+        clearStruct();
+        system("cls");
+        cout<<"\nEscribe el nombre del producto a editar o escribe * para salir: ";cin>>prodActual.producto;
+        if(prodActual.producto=="*")break;
+
+        switch (exist(prodActual.producto,-1)){
+        //no existe producto
+            case -1:{
+                system("cls");
+                cout<<"Producto no existente. intente de nuevo\n";
+                system("pause");
+                break;
+            }
+        //el producto esta dado de baja
+            case 0:{
+                system("cls");
+                cout<<"el producto no esta disponible\n";
+                system("pause");
+                break;
+            }
+        //el producto es accesible para editar  
+            case -2:{
+                system("cls");
+                int opcion=0;
+                imprimir(-2);
+                imprimir(-3);
+                do{
+                    cout<<"\nque valor desea modificar? \n1.-nombre \t2.-precio compra \t3.-precio venta \t4.-Existencia \t5.-N Reorden \n0.-ACTUALIZAR DATOS \nrespuesta: ";cin>>opcion;
+                    switch(opcion){
+                        //nombre
+                        case 1:{
+                            cout<<"escribe el nuevo valor para NOMBRE: ";cin>>prodActual.producto;
+                            break;
+                        }
+                        //pCompra
+                        case 2:{
+                            cout<<"escribe el nuevo valor para PRECIO DE COMPRA: ";cin>>prodActual.pc;
+                            break;
+                        }
+                        //pVenta
+                        case 3:{
+                            cout<<"escribe el nuevo valor para PRECIO DE VENTA: ";cin>>prodActual.pv;
+                            break;
+                        }
+                        //existencia
+                        case 4:{
+                            cout<<"escribe el nuevo valor para EXISTENCIAS: ";cin>>prodActual.existencias;
+                            break;
+                        }
+                        //nReorden
+                        case 5:{
+                            cout<<"escribe el nuevo valor para NIVEL DE REORDEN: ";cin>>prodActual.nReorden;
+                            break;
+                        }    
+                    }
+                }while(opcion!=0);
+                
+                system("cls");
+                cout<<"********DATOS MODIFICADOS********";
+                imprimir(-2);
+                imprimir(-3);
+                cout<<"\ndesea modificar los datos? \n1.- SI \n2.- NO\nrespuesta: ";cin>>opcion;
+                    
+                if (opcion==1){
+                    editProd(-2);
+                    system("cls");
+                    cout<<"listo!\n";
+                    system("pause");
+                }
+            }
+        }
+    }
 }
+
 //cuentas de ususario
 
 adminInventario(){
@@ -440,6 +498,11 @@ int editProd(int option){
         case -1:{
             //eliminar producto
             stock[prodActual.idGeneral].st=0;
+            break;
+        }
+        case -2:{
+            //eliminar producto
+            stock[prodActual.idGeneral]=prodActual;
             break;
         }
     }
