@@ -2,7 +2,9 @@
     "files.associations": {
         "iostream": "cpp",
         "xstring": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "xiosbase": "cpp",
+        "ostream": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
