@@ -328,7 +328,7 @@ void adminBajas(){
                 break;
             }           
             case -2:{ //el producto es accesible para baja 
-                int opcion=0;
+                //int opcion=0;
                 imprimir(-1,-2); //imprimir titulos
                 imprimir(-1,-3); //imprimir producto actual
                 editProd(-1,-1);
@@ -705,10 +705,13 @@ void adminInventario(){
         //impresion
         for(int i = 0; i <  nDatos; i++){
             exist(stock[i].producto,-1);
-            imprimir(-1,-3);
-            if(prodActual.existencias<=prodActual.st){
-                cout<<setw(6)<<"*";
+            if(prodActual.st==1){
+                imprimir(-1,-3);
+                if(prodActual.existencias<=prodActual.st){
+                    cout<<setw(6)<<"*";
+                }
             }
+            
         }    
         cout<<endl;
         system("pause"); 
