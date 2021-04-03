@@ -735,13 +735,14 @@ void adminCheckOut(){
 
 void menuVentas(){
     string option;
-    //limpiar estructura
+    
     cout<<"**EN VENTAS**\n";
     cout<<"*escribe * para imprimir ticket o ** para salir\n";
     cout<<"\ncliente "<<venta[0]+1<<"\n";
     venta[0]=0;
     while(true){
-        clearStruct();
+        //limpiar estructura
+        clearStruct(); 
         //agregar dato idVendedor
         venta[1]=sesion;       
         // pedir nombre del producto
