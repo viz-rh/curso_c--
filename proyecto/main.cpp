@@ -717,7 +717,7 @@ void adminInventario(){
         system("pause"); 
     }
     // restauracion orden original
-        for(int i=1; i<=nDatos; i++){
+        for(int i=0; i<nDatos; i++){
             stock[i]=a[i];
         }
 }
