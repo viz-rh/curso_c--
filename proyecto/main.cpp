@@ -675,8 +675,8 @@ void adminInventario(){
 
         switch(opcion){    
             case 1:{ //reorden acendente por id
-                for (int i = 0; i <  nDatos-1; i++) {
-                    for (int j = 0; j < nDatos - 1-i; j++) {
+                for (int i = 0; i <  nDatos; i++) {
+                    for (int j = 0; j < nDatos - 1; j++) {
                         if (stock[j].id > stock[j + 1].id){
                             aux = stock[j];
                             stock[j] = stock[j + 1];
@@ -687,8 +687,8 @@ void adminInventario(){
                 break;
             }
             case 2:{ //reorden acendente por nombre prod
-                for (int i=1; i<nDatos-1; i++){
-                    for (int j=0 ; j<nDatos - 1-i; j++){
+                for (int i=1; i<nDatos; i++){
+                    for (int j=0 ; j<nDatos - 1; j++){
                         auto arreglo1=stock[j].producto.c_str();
                         auto arreglo2=stock[j+1].producto.c_str();
                         if (strcmp(arreglo1,arreglo2)>0){
@@ -758,7 +758,7 @@ void menuVentas(){
             
             cout<<"**EN VENTAS**\n";
             cout<<"*escribe * para imprimir ticket o ** para salir\n";
-            cout<<"\ncliente "<<venta[0]+1<<"\n";
+            cout<<"\ncliente "<<venta[0]++<<"\n";
         //verificar si quiere salir
         }else if(prodActual.producto=="**"){    
             //imprimirTicket(todos)
@@ -794,8 +794,6 @@ void menuVentas(){
                         if(venta[3]<=prodActual.existencias){
                             //quitar el numero de articulos vendidos
                             stock[prodActual.idGeneral].existencias=prodActual.existencias-venta[3];
-                            //cambiar id de cliente
-                            venta[0]++;
                             //llenamos registro de ventas
                             for(int i=0;i<4;i++){
                                 ventas[vActual][i]=venta[i];
@@ -808,8 +806,6 @@ void menuVentas(){
                                 //restar a producto actual la cantidad.
                                 stock[prodActual.idGeneral].existencias=0;
                                 venta[3]=prodActual.existencias;
-                                //cambiar id de cliente
-                                venta[0]++;
                                 for(int i=0;i<4;i++){
                                     ventas[vActual][i]=venta[i];
                                 }
